@@ -1,7 +1,11 @@
-import json
 from flask import Flask, request, jsonify
 from Equation_slover_module import solve_equation_with_one_variable, solve_equations_with_two_variables
+
 app = Flask(__name__)
+ 
+@app.route("/")
+def index():
+    return "<h1>Hello!</h1>"
 
 @app.route('/solve_equation_with_one_variable', methods=['POST'])
 def solve_equation_with_one_variable_api():
@@ -25,15 +29,29 @@ def solve_equations_with_two_variables_api():
         equation2 = data.get('equation2', '')
         solution = solve_equations_with_two_variables(equation1, equation2)
         print(solution)
-        # bla = dict(solution, "x", "y")
         if solution is not None:
           return jsonify({'solution':solution})
-            # return jsonify({'solution': solution})
         else:
             return jsonify({'error': 'Unable to solve the equations'}), 400
 
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
-if __name__ == '__main__':
-    app.run()
+
+def create_app():
+    from waitress import serve
+    port = 8080
+    host = "0.0.0.0"
+    print(f'server is Running... port:{port}')
+    serve(app, host=host, port=port)
+
+
+# if __name__ == '__main__':
+#     app.run()
+
+# if __name__ == '__main__':
+#     from waitress import serve
+#     port = 8080
+#     host = "0.0.0.0"
+#     print(f'server is Running... port:{port}')
+#     serve(app, host=host, port=port)
