@@ -1,3 +1,9 @@
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+
 from flask import Flask, request, jsonify
 from Equation_slover_module import solve_equation_with_one_variable, solve_equations_with_two_variables
 
