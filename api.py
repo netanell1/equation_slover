@@ -1,17 +1,25 @@
+import os
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()
-
+debug = os.getenv("DEBUG")
 
 from flask import Flask, request, jsonify
 from Equation_slover_module import solve_equation_with_one_variable, solve_equations_with_two_variables
+from flask_cors import CORS
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/foo": {"origins": "*"}})
+app.config['CORS_HEADERS'] = 'Content-Type'
+
+app = Flask(__name__)
+# Enable CORS for all routes
+CORS(app)
  
 @app.route("/")
 def index():
-    return "<h1>Hello!</h1>"
+    return "<h1>Equation Slover Server!</h1>"
 
 @app.route('/solve_equation_with_one_variable', methods=['POST'])
 def solve_equation_with_one_variable_api():
@@ -52,8 +60,8 @@ def create_app():
     serve(app, host=host, port=port)
 
 
-# if __name__ == '__main__':
-#     app.run()
+if __name__ == '__main__' and debug:
+    app.run(debug=debug)
 
 # if __name__ == '__main__':
 #     from waitress import serve
