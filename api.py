@@ -8,10 +8,8 @@ debug = os.getenv("DEBUG")
 from flask import Flask, request, jsonify
 from Equation_slover_module import solve_equation_with_one_variable, solve_equations_with_two_variables
 from flask_cors import CORS
+import json
 
-app = Flask(__name__)
-cors = CORS(app, resources={r"/foo": {"origins": "*"}})
-app.config['CORS_HEADERS'] = 'Content-Type'
 
 app = Flask(__name__)
 # Enable CORS for all routes
@@ -24,8 +22,10 @@ def index():
 @app.route('/solve_equation_with_one_variable', methods=['POST'])
 def solve_equation_with_one_variable_api():
     try:
-        data = request.get_json()
-        equation = data.get('equation', '')
+        # print(request.get_data())
+        data = request.get_data()
+        data =json.loads(data.decode('utf-8'))
+        equation = data['equation']
         solution = solve_equation_with_one_variable(equation)
         if solution is not None:
         
@@ -38,9 +38,11 @@ def solve_equation_with_one_variable_api():
 @app.route('/solve_equations_with_two_variables', methods=['POST'])
 def solve_equations_with_two_variables_api():
     try:
-        data = request.get_json()
-        equation1 = data.get('equation1', '')
-        equation2 = data.get('equation2', '')
+        # data = request.get_json()
+        data = request.get_data()
+        data =json.loads(data.decode('utf-8'))
+        equation1 = data['equation1']
+        equation2 = data['equation2']
         solution = solve_equations_with_two_variables(equation1, equation2)
         print(solution)
         if solution is not None:
