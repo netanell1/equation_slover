@@ -48,10 +48,10 @@ def solve_equations_with_two_variables_api():
         if solution is not None:
           return jsonify({'solution':solution})
         else:
-            return jsonify({'error': 'Unable to solve the equations'}), 400
+            return jsonify({'error': 'Unable to solve the equations', 'code':1}), 400
 
     except Exception as e:
-        return jsonify({'error': str(e)}), 400
+        return jsonify({'error': str(e), 'code':2}), 400
 
 
 def create_app():
