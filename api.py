@@ -10,11 +10,17 @@ from Equation_slover_module import solve_equation_with_one_variable, solve_equat
 from flask_cors import CORS
 import json
 
+def handle_error(error:str):
+    if 'Cannot' in error:
+        return 2
+    else:
+        return 3
 
 app = Flask(__name__)
 # Enable CORS for all routes
 CORS(app)
- 
+from cmath import sqrt
+print(complex(2))
 @app.route("/")
 def index():
     return "<h1>Equation Slover Server!</h1>"
@@ -27,13 +33,15 @@ def solve_equation_with_one_variable_api():
         data =json.loads(data.decode('utf-8'))
         equation = data['equation']
         solution = solve_equation_with_one_variable(equation)
+        print(solution)
         if solution is not None:
         
-            return jsonify({'solution': [float(val) for val in solution]})
+            return jsonify({'solution': [float(abs(val)) for val in solution]})
         else:
             return jsonify({'error': 'Unable to solve the equation', 'code':1}), 400
     except Exception as e:
-        return jsonify({'error': str(e), 'code':2}), 400
+        code = handle_error(str(e))
+        return jsonify({'error': str(e), 'code':code}), 400
 
 @app.route('/solve_equations_with_two_variables', methods=['POST'])
 def solve_equations_with_two_variables_api():
@@ -51,7 +59,8 @@ def solve_equations_with_two_variables_api():
             return jsonify({'error': 'Unable to solve the equations', 'code':1}), 400
 
     except Exception as e:
-        return jsonify({'error': str(e), 'code':2}), 400
+        code = handle_error(str(e))
+        return jsonify({'error': str(e), 'code':code}), 400
 
 
 def create_app():
