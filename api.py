@@ -36,7 +36,7 @@ def solve_equation_with_one_variable_api():
         print(solution)
         if solution is not None:
         
-            return jsonify({'solution': [float(abs(val)) for val in solution]})
+            return jsonify({'solution': [float(val)for val in solution]})
         else:
             return jsonify({'error': 'Unable to solve the equation', 'code':1}), 400
     except Exception as e:

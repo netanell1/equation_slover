@@ -38,10 +38,10 @@ def solve_equations_with_two_variables(eq1:str, eq2:str):
     print(solution)
     if solution:
         if type(solution) is list:
-            solution_values = [{"x":complex(val[0]),"y": complex(val[1])} for val in solution]
+            solution_values = [{"x":float(val[0]),"y": float(val[1])} for val in solution]
         # Substitute specific values for x and y to get numerical values
         else:
-            solution_values =[{"x":complex(solution[x].evalf()),"y":complex(solution[y].evalf())}] 
+            solution_values =[{"x":float(solution[x].evalf()),"y":float(solution[y].evalf())}] 
             # {'x':float(solution[x].evalf()), 'y':float(solution[y].evalf())}
         # solution_values =[ solution[x].evalf(),solution[y].evalf() ]
         return solution_values
