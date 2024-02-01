@@ -31,9 +31,9 @@ def solve_equation_with_one_variable_api():
         
             return jsonify({'solution': [float(val) for val in solution]})
         else:
-            return jsonify({'error': 'Unable to solve the equation'}), 400
+            return jsonify({'error': 'Unable to solve the equation', 'code':1}), 400
     except Exception as e:
-        return jsonify({'error': str(e)}), 400
+        return jsonify({'error': str(e), 'code':2}), 400
 
 @app.route('/solve_equations_with_two_variables', methods=['POST'])
 def solve_equations_with_two_variables_api():
