@@ -35,15 +35,12 @@ def solve_equations_with_two_variables(eq1:str, eq2:str):
     equation2 = Eq(eval(left_side_eq2), eval(right_side_eq2))
 
     solution = solve((equation1, equation2), (x, y))
-    print(solution)
     if solution:
         if type(solution) is list:
-            solution_values = [{"x":float(val[0]),"y": float(val[1])} for val in solution]
+            solution_values = [{"x":str(val[0]),"y": str(val[1])} for val in solution]
         # Substitute specific values for x and y to get numerical values
         else:
-            solution_values =[{"x":float(solution[x].evalf()),"y":float(solution[y].evalf())}] 
-            # {'x':float(solution[x].evalf()), 'y':float(solution[y].evalf())}
-        # solution_values =[ solution[x].evalf(),solution[y].evalf() ]
+            solution_values =[{"x":str(solution[x].evalf()),"y":str(solution[y].evalf())}] 
         return solution_values
     else:
         return None

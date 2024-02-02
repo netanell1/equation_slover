@@ -9,12 +9,8 @@ from flask import Flask, request, jsonify
 from Equation_slover_module import solve_equation_with_one_variable, solve_equations_with_two_variables
 from flask_cors import CORS
 import json
+from handles import handle_error_code
 
-def handle_error(error:str):
-    if 'Cannot' in error:
-        return 2
-    else:
-        return 3
 
 app = Flask(__name__)
 # Enable CORS for all routes
@@ -35,13 +31,13 @@ def solve_equation_with_one_variable_api():
         solution = solve_equation_with_one_variable(equation)
         print(solution)
         if solution is not None:
-        
-            return jsonify({'solution': [float(val)for val in solution]})
+            # print(float(complex(-2, 0).real))
+            return jsonify({'solution': [str(val) for val in solution]})
         else:
             return jsonify({'error': 'Unable to solve the equation', 'code':1}), 400
     except Exception as e:
-        code = handle_error(str(e))
-        return jsonify({'error': str(e), 'code':code}), 400
+        code = handle_error_code(str(e))
+        return jsonify({'error':  str(e), 'code':code}), 400
 
 @app.route('/solve_equations_with_two_variables', methods=['POST'])
 def solve_equations_with_two_variables_api():
