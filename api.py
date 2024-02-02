@@ -30,7 +30,7 @@ def solve_equation_with_one_variable_api():
         equation = data['equation']
         solution = solve_equation_with_one_variable(equation)
         print(solution)
-        if solution is not None:
+        if solution is not None and len(solution)>0:
             # print(float(complex(-2, 0).real))
             return jsonify({'solution': [str(val) for val in solution]})
         else:
@@ -49,7 +49,7 @@ def solve_equations_with_two_variables_api():
         equation2 = data['equation2']
         solution = solve_equations_with_two_variables(equation1, equation2)
         print(solution)
-        if solution is not None:
+        if solution is not None and len(solution)>0:
           return jsonify({'solution':solution})
         else:
             return jsonify({'error': 'Unable to solve the equations', 'code':1}), 400
