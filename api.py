@@ -55,7 +55,7 @@ def solve_equations_with_two_variables_api():
             return jsonify({'error': 'Unable to solve the equations', 'code':1}), 400
 
     except Exception as e:
-        code = handle_error(str(e))
+        code = handle_error_code(str(e))
         return jsonify({'error': str(e), 'code':code}), 400
 
 
