@@ -1,4 +1,5 @@
 from sympy import symbols, Eq, solve
+from handles import handle_equation
 
 
 def solve_equation_with_one_variable(equation:str)->list:
@@ -6,6 +7,8 @@ def solve_equation_with_one_variable(equation:str)->list:
     x = symbols("x")
 
     # Parse the user input to extract coefficients and constants
+    equation = handle_equation(equation, ['x'])
+    print(equation)
     equation_parts = equation.split("=")
     left_side = equation_parts[0].strip()
     right_side = equation_parts[1].strip()
@@ -24,6 +27,8 @@ def solve_equations_with_two_variables(eq1:str, eq2:str):
     x=  symbols('x')
     y = symbols('y')
        # Parse the user input to extract coefficients and constants
+    eq1 = handle_equation(eq1, ['x','y'])
+    eq2 = handle_equation(eq2, ['x', 'y'])
     equation_parts_eq1 = eq1.split("=")
     left_side_eq1 = equation_parts_eq1[0].strip()
     right_side_eq1 = equation_parts_eq1[1].strip()
